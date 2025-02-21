@@ -1,0 +1,20 @@
+import requests
+
+response = requests.get("https://api.github.com/repos/kubernetes/kubernetes/pulls")
+
+complete_detail = response.json()
+
+pr_creators = {}
+
+for element in range(len(complete_detail)):
+    creator = complete_detail[element]["user"]["login"]
+
+    if creator in pr_creators:
+        pr_creators[creator] += 1
+    else:
+        pr_creators[creator] = 1
+
+print("******************* PR Creators and the count *******************")
+
+for pr, count in pr_creators.items():
+    print(f"{pr} and {count} PR")
